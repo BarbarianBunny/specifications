@@ -10,10 +10,10 @@ class Init:
 class Name:
 
     def given_filename(self):
-        assert Doc("test-file.pdf").name() == "test-file"
+        assert Doc("test-file.pdf").title() == "test-file"
 
     def given_filename_with_caps(self):
-        assert Doc("Test-File.pdf").name() == "Test-File"
+        assert Doc("Test-File.pdf").title() == "Test-File"
 
 
 class Title:

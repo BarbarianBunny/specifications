@@ -142,7 +142,7 @@ class HTML:
         if spec.unit is None:
             unit_html = ""
         else:
-            unit_html = cls.div("spec__unit", spec.unit)
+            unit_html = cls.span("spec__unit", spec.unit)
 
         spec_contents = "".join([
             cls.span("spec__label", spec.label),

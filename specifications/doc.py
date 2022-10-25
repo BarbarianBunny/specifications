@@ -18,8 +18,5 @@ class Doc:
         filename = re.sub(r" ", "%20", filename)
         return filename
 
-    def name(self):
-        return re.search(r"(.*)\.", self.filename).group(1)
-
     def title(self):
-        return ConvertCase.remove_kebab(self.name())
+        return re.search(r"(.*)\.", self.filename).group(1)
