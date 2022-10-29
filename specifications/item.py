@@ -5,7 +5,7 @@ from specifications.support_modules.convert_case import ConvertCase
 
 class Item:
     def __init__(self):
-        pass
+        self.referrers = {}
 
     def __new__(cls, *args, **kwargs):
         item = object.__new__(cls, *args, **kwargs)

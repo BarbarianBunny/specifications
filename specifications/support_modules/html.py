@@ -1,7 +1,11 @@
+import gc
+import sys
+import weakref
 from typing import Type
 
 from specifications.doc import Doc
 from specifications.item import Item
+from specifications.items.fuse_model import FuseModel
 from specifications.items.plant import Plant
 from specifications.spec import Spec
 from specifications.support_modules.flatten_list import flatten
@@ -50,7 +54,7 @@ class HTML:
             cls.body("".join([
                 cls.index(1),
                 cls.class_title(item_class.class_title()),
-                cls.div("header", cls.span("header__text", "Items")),
+                cls.header("Items"),
                 cls.items(item_class.items),
                 cls.docs(item_class.docs)
             ])))
@@ -72,7 +76,7 @@ class HTML:
         if not docs:
             return ""
         docs.sort()
-        return "".join([cls.div("header", cls.span("header__text", "Docs")),
+        return "".join([cls.header("Docs"),
                         cls.div("docs", "".join([cls.doc(doc) for doc in docs]))])
 
     @classmethod
@@ -85,9 +89,9 @@ class HTML:
             cls.head(f'JBLM Steam'),
             cls.body("".join([
                 cls.index(),
-                cls.div("header", cls.span("header__text", "Plants")),
+                cls.header("Plants"),
                 cls.items(Plant.items, 1),
-                cls.div("header", cls.span("header__text", "Equipment")),
+                cls.header("Equipment"),
                 *flatten([HTML.class_reference(subclass, 1) for subclass in Item.__subclasses__()
                           if subclass is not Plant and hasattr(subclass, "items")])
             ])))
@@ -113,7 +117,8 @@ class HTML:
                 cls.index(1),
                 cls.class_reference(item),
                 cls.item_title(item.item_title()),
-                cls.specs(item.specs(), item)
+                cls.specs(item.specs(), item),
+                cls.referrers(item)
             ])))
 
     @classmethod
@@ -122,7 +127,7 @@ class HTML:
 
     @classmethod
     def specs(cls, specs, item) -> str:
-        return cls.div("specs", "".join([cls.spec(spec, item) for spec in specs]))
+        return cls.div("specs", "".join([cls.spec(spec, item) for spec in specs if isinstance(spec, Spec)]))
 
     @classmethod
     def spec(cls, spec: Spec, item) -> str:
@@ -150,3 +155,20 @@ class HTML:
             unit_html])
 
         return cls.div("spec", spec_contents)
+
+    @classmethod
+    def referrers(cls, item):
+        # new version use item.referrers dict {"class title": [referrer_item, referrer_item], etc.}
+        referrer_html = []
+        for class_title, referrers in item.referrers.items():
+            referrer_html.append(cls.header(class_title))
+            for referrer in referrers:
+                if referrer is not None:
+                    referrer_html.append(cls.div("referrer",
+                                                 cls.a(f"../{referrer.class_kebab()}/{referrer.item_kebab()}.html",
+                                                       "referrer-link", referrer.item_title())))
+        return "".join(referrer_html)
+
+    @classmethod
+    def header(cls, text):
+        return cls.div("header", cls.span("header__text", text))
