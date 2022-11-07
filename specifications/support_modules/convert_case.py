@@ -5,7 +5,7 @@ class ConvertCase:
 
     @classmethod
     def kebab_case(cls, text):
-        return re.sub(r"[-_ :&?]+", "-", text.lower())
+        return re.sub(r"[-_ :&?/\"|]+", "-", text.lower())
 
     @classmethod
     def remove_kebab(cls, text):

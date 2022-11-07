@@ -19,6 +19,7 @@ class Unit(OrderedStrEnum):
     inch = " in"
     inches_of_water_column = '" WC'
     kilowatt = " KW"
+    kpa = " kPa"
     milliamp = " mA"
     ounce_per_square_inch = " oz/in^s"
     phase = " PH"

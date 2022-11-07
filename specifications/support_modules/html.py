@@ -1,12 +1,7 @@
-import gc
-import sys
-import weakref
 from typing import Type
 
 from specifications.doc import Doc
 from specifications.item import Item
-from specifications.items.fuse_model import FuseModel
-from specifications.items.plant import Plant
 from specifications.spec import Spec
 from specifications.support_modules.flatten_list import flatten
 
@@ -26,9 +21,13 @@ class HTML:
         return f'<div class="{class_}">{contents}</div>'
 
     @classmethod
-    def head(cls, title: str) -> str:
+    def head(cls, title: str, depth=0) -> str:
         meta = ''
         css = ''
+        if depth == 0:
+            css = '<link rel="stylesheet" href="styles.css"/>'
+        elif depth == 1:
+            css = '<link rel="stylesheet" href="../styles.css"/>'
         favicon = ''
         return f'{meta}{css}<title>{title}</title>{favicon}'
 
@@ -43,14 +42,14 @@ class HTML:
     @classmethod
     def index(cls, depth=0):
         if depth == 0:
-            return cls.div("index", cls.a("index.html", "index-link", "JBLM Steam"))
+            return cls.div("index", cls.a("index.html", "index-link", "Specifications"))
         if depth == 1:
-            return cls.div("index", cls.a("../index.html", "index-link", "JBLM Steam"))
+            return cls.div("index", cls.a("../index.html", "index-link", "Specifications"))
 
     @classmethod
     def class_html(cls, item_class: Type[Item]) -> str:
         return cls.html(
-            cls.head(item_class.class_title()),
+            cls.head(item_class.class_title(), 1),
             cls.body("".join([
                 cls.index(1),
                 cls.class_title(item_class.class_title()),
@@ -72,12 +71,12 @@ class HTML:
         return cls.div("class-title", cls.span("class-title__text", class_title))
 
     @classmethod
-    def docs(cls, docs: list[Doc]) -> str:
+    def docs(cls, docs: set[Doc]) -> str:
         if not docs:
             return ""
-        docs.sort()
+        docs_list = sorted(docs)
         return "".join([cls.header("Docs"),
-                        cls.div("docs", "".join([cls.doc(doc) for doc in docs]))])
+                        cls.div("docs", "".join([cls.doc(doc) for doc in docs_list]))])
 
     @classmethod
     def doc(cls, doc: Doc) -> str:
@@ -86,14 +85,12 @@ class HTML:
     @classmethod
     def index_html(cls):
         return cls.html(
-            cls.head(f'JBLM Steam'),
+            cls.head(f'Specifications', 0),
             cls.body("".join([
                 cls.index(),
-                cls.header("Plants"),
-                cls.items(Plant.items, 1),
                 cls.header("Equipment"),
-                *flatten([HTML.class_reference(subclass, 1) for subclass in Item.__subclasses__()
-                          if subclass is not Plant and hasattr(subclass, "items")])
+                *flatten([HTML.class_reference(subclass, 1) for subclass in Item.all_subclasses()
+                          if hasattr(subclass, "items")])
             ])))
 
     @classmethod
@@ -106,13 +103,13 @@ class HTML:
 
     @classmethod
     def items(cls, items, depth: int = 0):
-        items = sorted(list(items))
+        items = sorted(set(items))
         return cls.div("items", "".join([cls.item(item, depth) for item in items]))
 
     @classmethod
     def item_html(cls, item: Item):
         return cls.html(
-            cls.head(f'{item.item_title()} | {item.class_title()}'),
+            cls.head(f'{item.item_title()} | {item.class_title()}', 1),
             cls.body("".join([
                 cls.index(1),
                 cls.class_reference(item),
@@ -139,7 +136,9 @@ class HTML:
             value_contents = cls.a(f'../{value.class_kebab()}/{value.item_kebab()}.html', "item-link",
                                    value.item_title())
         elif isinstance(value, Doc):
-            item.docs.append(value)
+            if value.filename is None:
+                return ""
+            item.docs.add(value)
             value_contents = cls.a(value.href(), "doc-link", value.title())
         else:
             value_contents = value
@@ -150,7 +149,7 @@ class HTML:
             unit_html = cls.span("spec__unit", spec.unit)
 
         spec_contents = "".join([
-            cls.span("spec__label", spec.label),
+            cls.div("spec__label", spec.label),
             cls.span("spec__value", value_contents),
             unit_html])
 
@@ -158,16 +157,23 @@ class HTML:
 
     @classmethod
     def referrers(cls, item):
-        # new version use item.referrers dict {"class title": [referrer_item, referrer_item], etc.}
-        referrer_html = []
-        for class_title, referrers in item.referrers.items():
-            referrer_html.append(cls.header(class_title))
-            for referrer in referrers:
-                if referrer is not None:
-                    referrer_html.append(cls.div("referrer",
-                                                 cls.a(f"../{referrer.class_kebab()}/{referrer.item_kebab()}.html",
-                                                       "referrer-link", referrer.item_title())))
-        return "".join(referrer_html)
+        if item.referrers:
+            # new version use item.referrers dict {"class title": [referrer_item, referrer_item], etc.}
+            referrer_html = [cls.header("Referenced in")]
+            for class_title, referrers in item.referrers.items():
+                if referrers[0] is not None:
+                    referrer_html.append(cls.class_reference(referrers[0], 1))
+                else:
+                    referrer_html.append(cls.header(class_title))
+                referrers_html = []
+                for referrer in sorted(referrers):
+                    if referrer is not None:
+                        referrers_html.append(cls.div("referrer",
+                                                     cls.a(f"../{referrer.class_kebab()}/{referrer.item_kebab()}.html",
+                                                           "referrer-link", referrer.item_title())))
+                referrer_html.append(cls.div("referrers", "".join(referrers_html)))
+            return "".join(referrer_html)
+        return ""
 
     @classmethod
     def header(cls, text):

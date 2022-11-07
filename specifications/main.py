@@ -1,9 +1,11 @@
 import os
 import shutil
 
-from specifications.items.plant import Plant
+from specifications.items.make import Make
 from specifications.items.fuse_model import FuseModel
-from specifications.items.fuse import Fuse
+from specifications.items.low_gas_pressure_switch import LowGasPressureSwitch
+from specifications.items.high_gas_pressure_switch import HighGasPressureSwitch
+from specifications.items.low_air_pressure_switch import LowAirPressureSwitch
 
 from specifications.item import Item
 from specifications.support_modules.html import HTML

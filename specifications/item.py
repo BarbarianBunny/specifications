@@ -10,10 +10,10 @@ class Item:
     def __new__(cls, *args, **kwargs):
         item = object.__new__(cls, *args, **kwargs)
         if "items" not in cls.__dict__:
-            cls.items = WeakSet()
+            cls.items = set()  # WeakSet
         cls.items.add(item)
         if "docs" not in cls.__dict__:
-            cls.docs = list()
+            cls.docs = set()
         return item
 
     def __lt__(self, other):
@@ -30,6 +30,10 @@ class Item:
     @classmethod
     def class_kebab(cls):
         return ConvertCase.pascal_to_kebab(cls.__name__)
+
+    @classmethod
+    def all_subclasses(cls):
+        return sorted(set(cls.__subclasses__()).union([subclass for c in cls.__subclasses__() for subclass in c.all_subclasses()]), key=lambda subclass: subclass.__name__)
 
     def item_title(self):
         return self.__str__()

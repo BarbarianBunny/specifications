@@ -7,8 +7,15 @@ class Doc:
     def __init__(self, filename: str):
         self.filename = filename
 
+    def __eq__(self, other):
+        return self.filename == other.filename
+
+    def __hash__(self):
+        return hash(self.filename)
+
     def __lt__(self, other):
         return self.filename < other.filename
+
 
     def extension(self):
         return self.filename.split(".")[-1]

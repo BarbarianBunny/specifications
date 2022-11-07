@@ -1,12 +1,6 @@
 from specifications.enums.ordered_str_enum import OrderedStrEnum
 
 
-class FuseMake(OrderedStrEnum):
-    bussmann = "Bussmann"
-    littelfuse = "Littelfuse"
-    mersen = "Mersen"
-
-
 class FuseSpeed(OrderedStrEnum):
     fast_acting = "Fast-Acting"
     time_delay = "Time-Delay"
