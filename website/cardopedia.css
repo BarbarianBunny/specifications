@@ -220,6 +220,7 @@ textarea {
 
 html,
 body {
+    background-color: #FFF9E3;
     font-family: Verdana, sans-serif;
     font-size: 15px;
     line-height: 1.5;
@@ -236,6 +237,189 @@ img {
 a {
     color: inherit;
 }
+
+/* cardopedia classes */
+
+.category {
+    border: none;
+    display: inline-block;
+    padding: 4px 8px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: #FFF5CF;
+    background-clip: content-box;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    width: 100%;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.category:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.category__name {
+    padding: 10px 0;
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+}
+
+.category-content {
+    display: block;
+    text-align: center;
+    font-size: 0;
+}
+
+.category-content--hidden {
+    display: none;
+}
+
+.group {
+    border: none;
+    display: inline-block;
+    padding: 4px 8px;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.group__name {
+    font-size: 15px;
+    text-align: center;
+}
+
+.group-content {
+    display: block;
+}
+
+.card {
+    border: none;
+    display: inline-block;
+    padding: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.card--selected {
+    border: none;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: #e2f4ff;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.card:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.card-content {
+    display: block;
+    background-color: #e2f4ff;
+}
+
+.card-content--hidden {
+    display: none;
+}
+
+.card-link {
+    border: none;
+    display: inline-block;
+    padding: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background-color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.card-link:disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
+.card-name {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.card-image {
+    padding: 4px 4px;
+}
+
+.card > .card-image, .card--selected > .card-image {
+    width: 100px;
+}
+
+.card-link > .card-image {
+    width: 81px;
+}
+
+/*@media only screen and (max-width: 300px) {*/
+/*    .card-link {*/
+/*        max-width: 33.33%;*/
+/*    }*/
+/*    .card-image {*/
+/*        max-width: 50%;*/
+/*    }*/
+/*}*/
 
 /* Specifications Classes */
 
@@ -260,11 +444,3 @@ a {
 .specs {
     padding-bottom: 11px;
 }
-
-/* text fields? */
-
-/*.referrer-link, .doc-link, .item-link, .class-ref__link, .index-link, .class-title__text, .item-title__text, .spec__unit, .spec__value, .spec__label, .header__text{*/
-/*    font-family: Verdana, sans-serif;*/
-/*    font-size: 15px;*/
-/*    line-height: 1.5;*/
-/*}*/

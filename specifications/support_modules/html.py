@@ -22,7 +22,7 @@ class HTML:
 
     @classmethod
     def head(cls, title: str, depth=0) -> str:
-        meta = ''
+        meta = '<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
         css = ''
         if depth == 0:
             css = '<link rel="stylesheet" href="styles.css"/>'
