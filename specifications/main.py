@@ -31,7 +31,7 @@ for subclass in Item.__subclasses__():
     os.makedirs(os.path.join(website_folder, subclass.class_kebab()), exist_ok=True)
     for doc in subclass.docs:
         if not os.path.exists(os.path.join(website_folder, subclass.class_kebab(), doc.filename)):
-            shutil.copy(os.path.join(docs_folder, doc.filename), os.path.join(dirname, "..", website_folder, subclass.class_kebab(), doc.filename))
+            shutil.copy(os.path.join(docs_folder, doc.url), os.path.join(dirname, "..", website_folder, subclass.class_kebab(), doc.filename))
 
     # Create Subclass Page
     with open(os.path.join(website_folder, subclass.class_kebab(), f'{subclass.class_kebab()}.html'),

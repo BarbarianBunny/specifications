@@ -16,7 +16,6 @@ class Doc:
     def __lt__(self, other):
         return self.filename < other.filename
 
-
     def extension(self):
         return self.filename.split(".")[-1]
 

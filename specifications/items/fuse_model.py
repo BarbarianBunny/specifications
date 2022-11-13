@@ -174,12 +174,12 @@ FuseModel.klk_r.bussmann_equivalent = FuseModel.ktk_r
 
 # def generate_midget_fa_600():
 # MIDGET 13/32" x 1 1/2" F-A 600VAC
-FuseModel.atm = FuseModel(Make.mersen, "ATM", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 600, False, "MIDGET, ATM .1-50A, Mersen manual.pdf")
-FuseModel.ktk = FuseModel(Make.bussmann, "KTK", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 600, False, "MIDGET, KTK .1-30A, Bussmann manual.pdf")
-FuseModel.klk = FuseModel(Make.littelfuse, "KLK", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 600, False, "MIDGET, KLK .1-30A, Littelfuse manual.pdf")
+FuseModel.atm = FuseModel(Make.mersen, "ATM", FuseClass.midget, FuseSpeed.fast_acting, 600, False, "MIDGET, ATM .1-50A, Mersen manual.pdf")
+FuseModel.ktk = FuseModel(Make.bussmann, "KTK", FuseClass.midget, FuseSpeed.fast_acting, 600, False, "MIDGET, KTK .1-30A, Bussmann manual.pdf")
+FuseModel.klk = FuseModel(Make.littelfuse, "KLK", FuseClass.midget, FuseSpeed.fast_acting, 600, False, "MIDGET, KLK .1-30A, Littelfuse manual.pdf")
 
-FuseModel.klm = FuseModel(Make.bussmann, "KLM", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 600, False, "MIDGET, KLM .1-30A, Bussmann manual.pdf")
-FuseModel.dcm = FuseModel(Make.bussmann, "DCM", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 600, False, "MIDGET, DCM .1-30A, Bussmann manual.pdf")
+FuseModel.klm = FuseModel(Make.bussmann, "KLM", FuseClass.midget, FuseSpeed.fast_acting, 600, False, "MIDGET, KLM .1-30A, Bussmann manual.pdf")
+FuseModel.dcm = FuseModel(Make.bussmann, "DCM", FuseClass.midget, FuseSpeed.fast_acting, 600, False, "MIDGET, DCM .1-30A, Bussmann manual.pdf")
 
 
 FuseModel.atm.bussmann_equivalent = FuseModel.ktk
@@ -210,13 +210,13 @@ FuseModel.dcm.bussmann_upgrade = FuseModel.klm
 
 # def generate_midget_fa_250():
 # MIDGET 13/32" x 1 1/2" F-A 250VAC
-FuseModel.otm = FuseModel(Make.mersen, "OTM", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 250, False, "MIDGET, OTM 1-30A, Mersen manual.pdf")
-FuseModel.baf = FuseModel(Make.bussmann, "BAF", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 250, False, "MIDGET, BAF .25-30A, Bussmann manual.pdf")
-FuseModel.bln = FuseModel(Make.littelfuse, "BLN", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 250, False, "MIDGET, BLN 1-30, Littelfuse manual.pdf")
+FuseModel.otm = FuseModel(Make.mersen, "OTM", FuseClass.midget, FuseSpeed.fast_acting, 250, False, "MIDGET, OTM 1-30A, Mersen manual.pdf")
+FuseModel.baf = FuseModel(Make.bussmann, "BAF", FuseClass.midget, FuseSpeed.fast_acting, 250, False, "MIDGET, BAF .25-30A, Bussmann manual.pdf")
+FuseModel.bln = FuseModel(Make.littelfuse, "BLN", FuseClass.midget, FuseSpeed.fast_acting, 250, False, "MIDGET, BLN 1-30, Littelfuse manual.pdf")
 
-FuseModel.blf = FuseModel(Make.littelfuse, "BLF", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 250, False, "MIDGET, BLF .5-30A, Littelfuse manual.pdf")
-FuseModel.mic = FuseModel(Make.bussmann, "MIC", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 250, True, "MIDGET, MIC 1-30A, Bussmann manual.pdf")
-FuseModel.ban = FuseModel(Make.bussmann, "BAN", FuseClass.midget_13_32x1_1_2, FuseSpeed.fast_acting, 250, False, "MIDGET, BAN 1-30A, Bussmann manual.pdf")
+FuseModel.blf = FuseModel(Make.littelfuse, "BLF", FuseClass.midget, FuseSpeed.fast_acting, 250, False, "MIDGET, BLF .5-30A, Littelfuse manual.pdf")
+FuseModel.mic = FuseModel(Make.bussmann, "MIC", FuseClass.midget, FuseSpeed.fast_acting, 250, True, "MIDGET, MIC 1-30A, Bussmann manual.pdf")
+FuseModel.ban = FuseModel(Make.bussmann, "BAN", FuseClass.midget, FuseSpeed.fast_acting, 250, False, "MIDGET, BAN 1-30A, Bussmann manual.pdf")
 
 
 FuseModel.otm.bussmann_equivalent = FuseModel.baf
@@ -271,17 +271,17 @@ FuseModel.kld_r.bussmann_equivalent = FuseModel.fnq_r
 
 # def generate_midget_td():
 # MIDGET 13/32" x 1 1/2" T-D ___VAC
-FuseModel.atq = FuseModel(Make.mersen, "ATQ", FuseClass.midget_13_32x1_1_2, FuseSpeed.time_delay, 500, False, "MIDGET, ATQ .1-30A, Mersen manual.pdf")
-FuseModel.fnq = FuseModel(Make.bussmann, "FNQ", FuseClass.midget_13_32x1_1_2, FuseSpeed.time_delay, 500, False, "MIDGET, FNQ .1-30A, Bussmann manual.pdf")
-FuseModel.kld = FuseModel(Make.littelfuse, "KLD", FuseClass.midget_13_32x1_1_2, FuseSpeed.time_delay, 500, False)
+FuseModel.atq = FuseModel(Make.mersen, "ATQ", FuseClass.midget, FuseSpeed.time_delay, 500, False, "MIDGET, ATQ .1-30A, Mersen manual.pdf")
+FuseModel.fnq = FuseModel(Make.bussmann, "FNQ", FuseClass.midget, FuseSpeed.time_delay, 500, False, "MIDGET, FNQ .1-30A, Bussmann manual.pdf")
+FuseModel.kld = FuseModel(Make.littelfuse, "KLD", FuseClass.midget, FuseSpeed.time_delay, 500, False)
 
-FuseModel.trm = FuseModel(Make.mersen, "TRM", FuseClass.midget_13_32x1_1_2, FuseSpeed.time_delay, 250, False, "MIDGET, TRM .1-30A, Mersen manual.pdf")
-FuseModel.fnm = FuseModel(Make.bussmann, "FNM", FuseClass.midget_13_32x1_1_2, FuseSpeed.time_delay, 250, False, "MIDGET, FNM .1-30A, Bussmann manual.pdf")
-FuseModel.flm = FuseModel(Make.littelfuse, "FLM", FuseClass.midget_13_32x1_1_2, FuseSpeed.time_delay, 250, False, "MIDGET, FLM .1-30A, Littelfuse manual.pdf")
+FuseModel.trm = FuseModel(Make.mersen, "TRM", FuseClass.midget, FuseSpeed.time_delay, 250, False, "MIDGET, TRM .1-30A, Mersen manual.pdf")
+FuseModel.fnm = FuseModel(Make.bussmann, "FNM", FuseClass.midget, FuseSpeed.time_delay, 250, False, "MIDGET, FNM .1-30A, Bussmann manual.pdf")
+FuseModel.flm = FuseModel(Make.littelfuse, "FLM", FuseClass.midget, FuseSpeed.time_delay, 250, False, "MIDGET, FLM .1-30A, Littelfuse manual.pdf")
 
-FuseModel.gfn = FuseModel(Make.mersen, "GFN", FuseClass.midget_13_32x1_1_2, FuseSpeed.time_delay, 250, True, "MIDGET, GFN .1-30A, Mersen manual.pdf")
-FuseModel.fna = FuseModel(Make.bussmann, "FNA", FuseClass.midget_13_32x1_1_2, FuseSpeed.time_delay, 250, True, "MIDGET, FNA .1-30A, Bussmann manual.pdf")
-FuseModel.fla = FuseModel(Make.littelfuse, "FLA", FuseClass.midget_13_32x1_1_2, FuseSpeed.time_delay, 250, True)
+FuseModel.gfn = FuseModel(Make.mersen, "GFN", FuseClass.midget, FuseSpeed.time_delay, 250, True, "MIDGET, GFN .1-30A, Mersen manual.pdf")
+FuseModel.fna = FuseModel(Make.bussmann, "FNA", FuseClass.midget, FuseSpeed.time_delay, 250, True, "MIDGET, FNA .1-30A, Bussmann manual.pdf")
+FuseModel.fla = FuseModel(Make.littelfuse, "FLA", FuseClass.midget, FuseSpeed.time_delay, 250, True)
 
 
 FuseModel.atq.bussmann_equivalent = FuseModel.fnq

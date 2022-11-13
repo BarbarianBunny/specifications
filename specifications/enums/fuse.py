@@ -9,12 +9,12 @@ class FuseSpeed(OrderedStrEnum):
 
 class FuseClass(OrderedStrEnum):
     cc = "CC"
-    ceramic_5mmx20mm = "Ceramic 5mm x 20mm"
+    ceramic_5mmx20mm = "Ceramic 5x20mm"
     g = "G"
-    glass_1_4x1_1_4 = 'Glass 1/4" x 1 1/4"'
-    glass_5mmx20mm = "Glass 5mm x 20mm"
+    glass_1_4x1_1_4 = 'Glass 1/4 x 1 1/4"'
+    glass_5mmx20mm = "Glass 5x20mm"
     h = "H"
     j = "J"
     k5 = "K5"
-    midget_13_32x1_1_2 = 'MIDGET 13/32" x 1 1/2"'
+    midget = 'MIDGET'
     rk5 = "RK5"

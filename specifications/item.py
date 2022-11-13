@@ -1,5 +1,6 @@
 from weakref import WeakSet
 
+from specifications.enums.item_group import ItemGroup
 from specifications.support_modules.convert_case import ConvertCase
 
 
@@ -14,6 +15,8 @@ class Item:
         cls.items.add(item)
         if "docs" not in cls.__dict__:
             cls.docs = set()
+        if "item_group" not in cls.__dict__:
+            cls.item_group = ItemGroup.equipment
         return item
 
     def __lt__(self, other):
