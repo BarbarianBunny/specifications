@@ -31,3 +31,4 @@ class Unit(OrderedStrEnum):
     stroke_per_minute = " SPM"
     thousand_btu_per_hour = " MBH"
     volt = " V"
+    volt_ampere = " VA"
