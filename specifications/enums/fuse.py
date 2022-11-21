@@ -16,5 +16,5 @@ class FuseClass(OrderedStrEnum):
     h = "H"
     j = "J"
     k5 = "K5"
-    midget = 'MIDGET'
+    midget_1_1_2 = 'MIDGET 1 1/2"'
     rk5 = "RK5"

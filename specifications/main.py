@@ -1,6 +1,7 @@
 import os
 import shutil
 
+from specifications.items.burner import Burner
 from specifications.items.burner_controller import BurnerController
 from specifications.items.chemical_pump import ChemicalPump
 from specifications.items.flame_scanner import FlameScanner
@@ -50,6 +51,7 @@ with open(os.path.join(website_folder, 'index.html'), "w") as f:
 
 
 def item_class_calls():
+    Burner
     BurnerController
     ChemicalPump
     FlameScanner

@@ -261,6 +261,10 @@ a {
     padding-bottom: 11px;
 }
 
+.spec__label {
+    font-style: italic;
+}
+
 /* text fields? */
 
 /*.referrer-link, .doc-link, .item-link, .class-ref__link, .index-link, .class-title__text, .item-title__text, .spec__unit, .spec__value, .spec__label, .header__text{*/
