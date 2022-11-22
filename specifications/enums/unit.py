@@ -16,7 +16,7 @@ class Unit(OrderedStrEnum):
     horse_power = " HP"
     hertz = " Hz"
     hour = " hr"
-    inch = " in"
+    inch = '"'
     inches_of_water_column = '" WC'
     kilowatt = " KW"
     kpa = " kPa"

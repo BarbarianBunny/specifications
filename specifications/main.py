@@ -5,6 +5,8 @@ from specifications.items.burner import Burner
 from specifications.items.burner_controller import BurnerController
 from specifications.items.chemical_pump import ChemicalPump
 from specifications.items.flame_scanner import FlameScanner
+from specifications.items.fuel_tank import FuelTank
+from specifications.items.gas_block_valve_body import GasBlockValveBody
 from specifications.items.ignition_transformer import IgnitionTransformer
 from specifications.items.make import Make
 from specifications.items.fuse import Fuse
@@ -14,7 +16,7 @@ from specifications.items.low_air_pressure_switch import LowAirPressureSwitch
 
 from specifications.item import Item
 from specifications.html import HTML
-
+from specifications.items.pipe_size import PipeSize
 
 dirname = os.path.dirname(__file__)
 docs_folder = os.path.join(dirname, "..", "docs")
@@ -51,13 +53,17 @@ with open(os.path.join(website_folder, 'index.html'), "w") as f:
 
 
 def item_class_calls():
+    Make
+    PipeSize
+
     Burner
     BurnerController
     ChemicalPump
     FlameScanner
+    FuelTank
     Fuse
+    GasBlockValveBody
     HighGasPressureSwitch
     IgnitionTransformer
     LowAirPressureSwitch
     LowGasPressureSwitch
-    Make

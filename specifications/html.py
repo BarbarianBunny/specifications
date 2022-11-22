@@ -64,6 +64,8 @@ class HTML:
             return cls.a(f'{item.class_kebab()}.html', item.class_title())
         elif depth == 1:
             return cls.a(f'{item.class_kebab()}/{item.class_kebab()}.html', item.class_title())
+        elif depth == 2:
+            return cls.a(f'../{item.class_kebab()}/{item.class_kebab()}.html', item.class_title())
 
     @classmethod
     def docs(cls, docs: set[Doc]) -> str:
@@ -102,9 +104,6 @@ class HTML:
             subclass_html.append(cls.div("group", "".join(items)))
 
         return "".join(subclass_html)
-
-
-
 
     @classmethod
     def item(cls, item: Item, depth: int = 0):
@@ -145,31 +144,44 @@ class HTML:
         if value is None:
             return ""
 
-        if isinstance(value, Item):
-            value_contents = cls.a(f'../{value.class_kebab()}/{value.item_kebab()}.html', value.item_title())
-        elif isinstance(value, Doc):
-            if value.filename is None:
-                return ""
-            item.docs.add(value)
-            value_contents = cls.a(value.href(), value.title())
-        elif isinstance(value, Link):
-            if value.url is None:
-                return ""
-            value_contents = cls.a(value.url, value.url)
-        else:
-            value_contents = cls.span(value)
-
-        if spec.unit is None:
-            unit_html = ""
-        else:
-            unit_html = cls.span(spec.unit)
+        value_contents = cls.spec_value(item, value, spec.unit)
+        if value_contents is None:
+            return ""
 
         spec_contents = "".join([
             cls.div("spec__label", spec.label),
-            value_contents,
-            unit_html])
+            value_contents])
 
         return cls.div("spec", spec_contents)
+
+    @classmethod
+    def spec_unit(cls, unit):
+        if unit is None:
+            return ""
+        else:
+            return cls.span(unit)
+
+    @classmethod
+    def spec_value(cls, item, value, unit):
+        if isinstance(value, list):
+            values = []
+            for thing in value:
+                values.append(cls.spec_value(item, thing, unit))
+            return ", ".join(values)
+        elif isinstance(value, Item):
+            return cls.a(f'../{value.class_kebab()}/{value.item_kebab()}.html', value.item_title()) + cls.spec_unit(
+                unit)
+        elif isinstance(value, Doc):
+            if value.filename is None:
+                return None
+            item.docs.add(value)
+            return cls.a(value.href(), value.title())
+        elif isinstance(value, Link):
+            if value.url is None:
+                return ""
+            return cls.a(value.url, value.url)
+        else:
+            return cls.span(value) + cls.spec_unit(unit)
 
     @classmethod
     def referrers(cls, item):
@@ -178,7 +190,7 @@ class HTML:
             referrer_html = [cls.header(cls.span("Referenced in"))]
             for class_title, referrers in item.referrers.items():
                 if referrers[0] is not None:
-                    referrer_html.append(cls.header(cls.class_link(referrers[0], 1)))
+                    referrer_html.append(cls.header(cls.class_link(referrers[0], 2)))
                 else:
                     referrer_html.append(cls.header(cls.span(class_title)))
                 referrers_html = []
