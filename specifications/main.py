@@ -7,6 +7,7 @@ from specifications.items.chemical_pump import ChemicalPump
 from specifications.items.flame_scanner import FlameScanner
 from specifications.items.fuel_tank import FuelTank
 from specifications.items.gas_block_valve_body import GasBlockValveBody
+from specifications.items.gas_block_valve_head import GasBlockValveHead
 from specifications.items.ignition_transformer import IgnitionTransformer
 from specifications.items.make import Make
 from specifications.items.fuse import Fuse
@@ -63,6 +64,7 @@ def item_class_calls():
     FuelTank
     Fuse
     GasBlockValveBody
+    GasBlockValveHead
     HighGasPressureSwitch
     IgnitionTransformer
     LowAirPressureSwitch
