@@ -1,3 +1,5 @@
+from specifications.enums.item_group import ItemGroup
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.enums.pressure_switch import BreaksOn, ResetType
 from specifications.enums.unit import Unit
@@ -10,6 +12,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class LowAirPressureSwitch(Item):
+    item_group = ItemGroup.equipment
+
     smd_2 = None
     smd_3 = None
     hb40a214 = None
@@ -27,20 +31,22 @@ class LowAirPressureSwitch(Item):
         return super().__new__(cls)
 
     def __init__(self, make: Make, model: str, breaks_on: BreaksOn, range_min, range_max, range_unit: Unit,
-                 reset_type: ResetType, size: PipeSize,  manual: str = None, part_number=None, honeywell_replacement=None):
+                 reset_type: ResetType, size: PipeSize, manual: str = None, part_number=None,
+                 honeywell_replacement=None):
         super().__init__()
         self.make = make
         self.model = Spec("Model", model)
         self.part_number = Spec("Part Number", part_number)
         self.breaks_on = Spec("Breaks on", breaks_on)
-        self.range = Spec("Range", f"{range_min} - {range_max}", range_unit)
+        self.range = [range_min, range_max, range_unit]
         self.reset_type = Spec("Reset Type", reset_type)
         self.size = size
 
         # LowAirPressureSwitch
         self.honeywell_replacement = honeywell_replacement
 
-        # Docs
+        if manual:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
 
     @item_property
@@ -50,6 +56,17 @@ class LowAirPressureSwitch(Item):
     @make.setter
     def make(self, item):
         self._make = Spec("Make", item)
+
+    @property
+    def range(self):
+        return self._range
+
+    @range.setter
+    def range(self, items):
+        if items[0] and items[1] and items[2]:
+            self._range = Spec("Range", f"{items[0]} - {items[1]}", items[2])
+        else:
+            self._range = Spec("Range", None)
 
     @item_property
     def size(self):
@@ -88,7 +105,7 @@ LowAirPressureSwitch.smd_3 = LowAirPressureSwitch(Make.antunes, "SMD", BreaksOn.
 # H-Series
 
 LowAirPressureSwitch.hb40a214 = LowAirPressureSwitch(Make.asco, "H-Series", BreaksOn.fall, 4, 12,
-                                                     Unit.pound_per_square_inch, ResetType.auto, PipeSize.d0_25,
+                                                     Unit.pounds_per_square_inch, ResetType.auto, PipeSize.d0_25,
                                                      "Asco H Series manual.pdf", "HB40A214")
 
 # Cleavland Controls
@@ -102,7 +119,7 @@ LowAirPressureSwitch.afs_a = LowAirPressureSwitch(Make.cleveland_controls, "AFS-
 # 161P
 
 LowAirPressureSwitch.dietz_161P = LowAirPressureSwitch(Make.cleveland_controls, "161P", BreaksOn.fall, .25, 15,
-                                                       Unit.pound_per_square_inch, ResetType.auto, PipeSize.d0_25,
+                                                       Unit.pounds_per_square_inch, ResetType.auto, PipeSize.d0_25,
                                                        "Dietz 161P manual.pdf")
 
 # Honeywell

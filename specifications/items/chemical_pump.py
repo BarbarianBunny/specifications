@@ -1,5 +1,7 @@
 from specifications.doc import Doc
+from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -7,6 +9,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class ChemicalPump(Item):
+    item_group = ItemGroup.equipment
+
     ewn_b11veur = None
     ezb11d1_pe = None
 
@@ -20,11 +24,12 @@ class ChemicalPump(Item):
         self.model = Spec("Model", model)
         self.capacity = Spec("Capacity", capacity, Unit.gallon_per_hour)
         self.stroke_rate = Spec("Stroke Rate", f"{min_stroke_rate}-{max_stroke_rate}", Unit.stroke_per_minute)
-        self.max_psi = Spec("Max Pressure", max_psi, Unit.pound_per_square_inch)
+        self.max_psi = Spec("Max Pressure", max_psi, Unit.pounds_per_square_inch)
         self.voltage = Spec("Voltage", voltage, Unit.volt)
         self.amp = Spec("Amp", amp, Unit.amp)
 
-        # Docs
+        if manual or spec_doc:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.spec_doc = Spec("Specs", Doc(spec_doc))
 

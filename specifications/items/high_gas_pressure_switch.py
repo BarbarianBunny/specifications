@@ -1,3 +1,5 @@
+from specifications.enums.item_group import ItemGroup
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.enums.pressure_switch import ResetType, BreaksOn
 from specifications.enums.unit import Unit
@@ -9,6 +11,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class HighGasPressureSwitch(Item):
+    item_group = ItemGroup.equipment
+
     hgp_a_1 = None
     hgp_a_2 = None
     hgp_a_3 = None
@@ -54,7 +58,8 @@ class HighGasPressureSwitch(Item):
         # LowGasPressureSwitch
         self.honeywell_replacement = honeywell_replacement
 
-        # Docs
+        if manual:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
 
     @item_property
@@ -134,7 +139,7 @@ HighGasPressureSwitch.c645b1047 = HighGasPressureSwitch(Make.honeywell, "C645B10
                                                         Unit.inches_of_water_column, ResetType.manual, PipeSize.d0_25,
                                                         "Honeywell C645x manual.pdf")
 HighGasPressureSwitch.c645b1054 = HighGasPressureSwitch(Make.honeywell, "C645B1054", BreaksOn.rise, .7, 5.0,
-                                                        Unit.kpa, ResetType.manual, PipeSize.d0_25,
+                                                        Unit.kilopascal, ResetType.manual, PipeSize.d0_25,
                                                         "Honeywell C645x manual.pdf")
 HighGasPressureSwitch.c645b1062 = HighGasPressureSwitch(Make.honeywell, "C645B1062", BreaksOn.rise, 5, 35,
                                                         Unit.inches_of_water_column, ResetType.manual, PipeSize.d0_25,
@@ -155,13 +160,13 @@ HighGasPressureSwitch.b1028 = HighGasPressureSwitch(Make.honeywell, "C6097B1028"
                                                     Unit.inches_of_water_column, ResetType.manual, PipeSize.d0_25,
                                                     "Honeywell C6097x1xxx manual.pdf")
 HighGasPressureSwitch.b1051 = HighGasPressureSwitch(Make.honeywell, "C6097B1051", BreaksOn.rise, 1.5, 7,
-                                                    Unit.pound_per_square_inch, ResetType.manual, PipeSize.d0_25,
+                                                    Unit.pounds_per_square_inch, ResetType.manual, PipeSize.d0_25,
                                                     "Honeywell C6097x1xxx manual.pdf")
 HighGasPressureSwitch.b1085 = HighGasPressureSwitch(Make.honeywell, "C6097B1085", BreaksOn.rise, 12, 60,
                                                     Unit.inches_of_water_column, ResetType.auto, PipeSize.d0_25,
                                                     "Honeywell C6097x1xxx manual.pdf")
 HighGasPressureSwitch.b1101 = HighGasPressureSwitch(Make.honeywell, "C6097B1101", BreaksOn.rise, 1.5, 7,
-                                                    Unit.pound_per_square_inch, ResetType.auto, PipeSize.d0_25,
+                                                    Unit.pounds_per_square_inch, ResetType.auto, PipeSize.d0_25,
                                                     "Honeywell C6097x1xxx manual.pdf")
 HighGasPressureSwitch.b1119 = HighGasPressureSwitch(Make.honeywell, "C6097B1119", BreaksOn.rise, 3, 21,
                                                     Unit.inches_of_water_column, ResetType.auto, PipeSize.d0_25,

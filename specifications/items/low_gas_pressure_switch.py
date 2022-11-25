@@ -1,3 +1,5 @@
+from specifications.enums.item_group import ItemGroup
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.enums.pressure_switch import BreaksOn, ResetType
 from specifications.enums.unit import Unit
@@ -9,6 +11,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class LowGasPressureSwitch(Item):
+    item_group = ItemGroup.equipment
+
     lgp_a_1 = None
     lgp_a_9 = None
     lgp_a_2 = None
@@ -56,14 +60,15 @@ class LowGasPressureSwitch(Item):
         self.model = Spec("Model", model)
         self.part_number = Spec("Part Number", part_number)
         self.breaks_on = Spec("Breaks on", breaks_on)
-        self.range = Spec("Range", f"{range_min} - {range_max}", range_unit)
+        self.range = [range_min, range_max, range_unit]
         self.reset_type = Spec("Reset Type", reset_type)
         self.size = size
 
         # LowGasPressureSwitch
         self.honeywell_replacement = honeywell_replacement
 
-        # Docs
+        if manual:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
 
     @item_property
@@ -73,6 +78,17 @@ class LowGasPressureSwitch(Item):
     @make.setter
     def make(self, item):
         self._make = Spec("Make", item)
+
+    @property
+    def range(self):
+        return self._range
+
+    @range.setter
+    def range(self, items):
+        if items[0] and items[1] and items[2]:
+            self._range = Spec("Range", f"{items[0]} - {items[1]}", items[2])
+        else:
+            self._range = Spec("Range", None)
 
     @item_property
     def size(self):
@@ -150,7 +166,7 @@ LowGasPressureSwitch.c645a1048 = LowGasPressureSwitch(Make.honeywell, "C645A1048
                                                       Unit.inches_of_water_column, ResetType.manual, PipeSize.d0_25,
                                                       "Honeywell C645x manual.pdf")
 LowGasPressureSwitch.c645a1055 = LowGasPressureSwitch(Make.honeywell, "C645A1055", BreaksOn.fall, 5, 35,
-                                                      Unit.kpa, ResetType.manual, PipeSize.d0_25,
+                                                      Unit.kilopascal, ResetType.manual, PipeSize.d0_25,
                                                       "Honeywell C645x manual.pdf")
 LowGasPressureSwitch.c645a1063 = LowGasPressureSwitch(Make.honeywell, "C645A1063", BreaksOn.fall, 5, 35,
                                                       Unit.inches_of_water_column, ResetType.manual, PipeSize.d0_25,
@@ -159,10 +175,10 @@ LowGasPressureSwitch.c645a1071 = LowGasPressureSwitch(Make.honeywell, "C645A1071
                                                       Unit.inches_of_water_column, ResetType.manual, PipeSize.d0_25,
                                                       "Honeywell C645x manual.pdf")
 LowGasPressureSwitch.c645a1089 = LowGasPressureSwitch(Make.honeywell, "C645A1089", BreaksOn.fall, 0.7, 5.0,
-                                                      Unit.kpa, ResetType.manual, PipeSize.d0_25,
+                                                      Unit.kilopascal, ResetType.manual, PipeSize.d0_25,
                                                       "Honeywell C645x manual.pdf")
 LowGasPressureSwitch.c645a1097 = LowGasPressureSwitch(Make.honeywell, "C645A1097", BreaksOn.fall, 0.7, 5.0,
-                                                      Unit.kpa, ResetType.manual, PipeSize.d0_25,
+                                                      Unit.kilopascal, ResetType.manual, PipeSize.d0_25,
                                                       "Honeywell C645x manual.pdf")
 LowGasPressureSwitch.c645a1105 = LowGasPressureSwitch(Make.honeywell, "C645A1105", BreaksOn.fall, 3, 21,
                                                       Unit.inches_of_water_column, ResetType.manual, PipeSize.d0_25,
@@ -189,10 +205,10 @@ LowGasPressureSwitch.a1095 = LowGasPressureSwitch(Make.honeywell, "C6097A1095", 
                                                   Unit.inches_of_water_column, ResetType.manual, PipeSize.d0_25,
                                                   "Honeywell C6097x1xxx manual.pdf")
 LowGasPressureSwitch.a1111 = LowGasPressureSwitch(Make.honeywell, "C6097A1111", BreaksOn.fall, 1.5, 7,
-                                                  Unit.pound_per_square_inch, ResetType.manual, PipeSize.d0_25,
+                                                  Unit.pounds_per_square_inch, ResetType.manual, PipeSize.d0_25,
                                                   "Honeywell C6097x1xxx manual.pdf")
 LowGasPressureSwitch.a1137 = LowGasPressureSwitch(Make.honeywell, "C6097A1137", BreaksOn.fall, 1.5, 7,
-                                                  Unit.pound_per_square_inch, ResetType.auto, PipeSize.d0_25,
+                                                  Unit.pounds_per_square_inch, ResetType.auto, PipeSize.d0_25,
                                                   "Honeywell C6097x1xxx manual.pdf")
 
 # C6097A3xxx

@@ -1,5 +1,7 @@
 from specifications.doc import Doc
+from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -7,6 +9,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class IgnitionTransformer(Item):
+    item_group = ItemGroup.equipment
+
     _1092_h = None
     _1092_pf = None
     _1092_pf_G = None
@@ -35,7 +39,8 @@ class IgnitionTransformer(Item):
         self.secondary_volts = Spec("Secondary Volts", secondary_volts, Unit.volt)
         self.milliamps = Spec("Milliamps", milliamps, Unit.milliamp)
 
-        # Docs
+        if catalogue:
+            self.doc_header = Spec(None, Header("Docs"))
         self.catalogue = Spec("Catalogue", Doc(catalogue))
 
     @item_property

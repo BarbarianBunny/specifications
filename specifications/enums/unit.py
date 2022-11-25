@@ -2,33 +2,61 @@ from specifications.enums.ordered_str_enum import OrderedStrEnum
 
 
 class Unit(OrderedStrEnum):
-    amp = " A"
-    boiler_horse_power = " BHP"
-    british_thermal_unit = " BTU"
-    british_thermal_unit_per_hour = " BTU/hr"
-    degree = "°"
-    degree_celsius = "°C"
-    degree_fahrenheit = "°F"
-    feet = " ft"
-    gallon = " GAL"
-    gallon_per_hour = " GPH"
-    gallon_per_minute = " GPM"
-    horse_power = " HP"
-    hertz = " Hz"
-    hour = " hr"
-    inch = '"'
-    inches_of_water_column = '" WC'
-    kilowatt = " KW"
-    kpa = " kPa"
+    # Electrical
     milliamp = " mA"
-    ounce_per_square_inch = " oz/in^s"
+    amp = " A"
+    hertz = " Hz"
     phase = " PH"
-    pounds = " lbs"
-    pounds_per_hour = " lbs/hr"
-    pound_per_square_inch = " PSI"
-    rotations_per_minute = " RPM"
-    second = " s"
-    stroke_per_minute = " SPM"
-    thousand_btu_per_hour = " MBH"
     volt = " V"
     volt_ampere = " VA"
+    kilowatt = " KW"
+
+    # Frequency of Occurrence
+    rotations_per_minute = " RPM"
+    stroke_per_minute = " SPM"
+
+    # Temperature
+    degree_celsius = "°C"
+    degree_fahrenheit = "°F"
+
+    # Pressure
+    pounds_per_square_inch = " psi"
+    inches_of_water_column = '"WC'
+    feet_of_water_column = "'WC"
+    centimeter_of_water_column = "cmWC"
+    inches_of_mercury = '"Hg'
+    millimeters_of_mercury = " mmHg"
+    kilopascal = " kPa"
+    millibar = " mbar"
+    bar = "bar"
+    kilograms_per_square_centimeter = "kg/cm<sup>2</sup>"
+    ounces_per_square_inch = " ozin<sup>2</sup>"
+
+    # Distance
+    inch = '"'
+    feet = " ft"
+
+    # Volume
+    gallon = " gal"
+
+    # Angle
+    degree = "°"
+
+    # Power
+    horse_power = " HP"
+    boiler_horse_power = " BHP"
+    british_thermal_unit = " BTU"
+    british_thermal_units_per_hour = " BTU/hr"
+    thousand_british_thermal_units_per_hour = " MBH"
+
+    # Flow
+    gallon_per_hour = " GPH"
+    gallon_per_minute = " GPM"
+    pounds_per_hour = " lbs/hr"
+
+    # Time
+    hour = " hr"
+    second = " s"
+
+    # Weight
+    pounds = " lbs"

@@ -1,6 +1,8 @@
 from specifications.doc import Doc
 from specifications.enums.flame_scanner import SensorType
+from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -8,6 +10,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class FlameScanner(Item):
+    item_group = ItemGroup.equipment
+
     c7027a1023 = None
     c7027a1049 = None
     c7915a1044 = None
@@ -25,7 +29,8 @@ class FlameScanner(Item):
         self.sensor_type = Spec("Type", sensor_type)
         self.self_test = Spec("Self Test", self_test)
 
-        # Docs
+        if manual or catalogue:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.catalogue = Spec("Catalogue", Doc(catalogue))
 

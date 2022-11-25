@@ -1,6 +1,7 @@
 from typing import Type
 
 from specifications.doc import Doc
+from specifications.header import Header
 from specifications.item import Item
 from specifications.link import Link
 from specifications.spec import Spec
@@ -141,18 +142,18 @@ class HTML:
     @classmethod
     def spec(cls, spec: Spec, item) -> str:
         value = spec.value
-        if value is None:
-            return ""
 
         value_contents = cls.spec_value(item, value, spec.unit)
         if value_contents is None:
             return ""
 
-        spec_contents = "".join([
-            cls.div("spec__label", spec.label),
-            value_contents])
-
-        return cls.div("spec", spec_contents)
+        if spec.label:
+            spec_contents = "".join([
+                cls.div("spec__label", spec.label),
+                value_contents])
+            return cls.div("spec", spec_contents)
+        else:
+            return value_contents
 
     @classmethod
     def spec_unit(cls, unit):
@@ -163,6 +164,8 @@ class HTML:
 
     @classmethod
     def spec_value(cls, item, value, unit):
+        if value is None:
+            return None
         if isinstance(value, list):
             values = []
             for thing in value:
@@ -178,8 +181,10 @@ class HTML:
             return cls.a(value.href(), value.title())
         elif isinstance(value, Link):
             if value.url is None:
-                return ""
+                return None
             return cls.a(value.url, value.url)
+        elif isinstance(value, Header):
+            return cls.header(cls.span(value.header))
         else:
             return cls.span(value) + cls.spec_unit(unit)
 

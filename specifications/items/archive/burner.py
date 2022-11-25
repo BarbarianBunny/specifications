@@ -23,8 +23,8 @@ class Burner(Item):
         self.make = make
         self.model = Spec("Model", model)
         self.gas_type = Spec("Gas Type", gas_type)
-        self.gas_min_mbh = Spec("Gas min", gas_min_mbh, Unit.thousand_btu_per_hour)
-        self.gas_max_mbh = Spec("Gas max", gas_max_mbh, Unit.thousand_btu_per_hour)
+        self.gas_min_mbh = Spec("Gas min", gas_min_mbh, Unit.thousand_british_thermal_units_per_hour)
+        self.gas_max_mbh = Spec("Gas max", gas_max_mbh, Unit.thousand_british_thermal_units_per_hour)
         self.oil_type = Spec("Oil Type", oil_type)
         self.oil_min = Spec("Oil min", oil_min, Unit.gallon_per_hour)
         self.oil_max = Spec("Oil max", oil_max, Unit.gallon_per_hour)

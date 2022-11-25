@@ -39,6 +39,7 @@ class Make(Item):
     ecowater_systems = None
     emerson = None
     equimeter = None
+    extech = None
     fabtek_aero = None
     fireye = None
     franklin_electric = None
@@ -130,6 +131,7 @@ Make.ecodyne_industrial = Make("Ecodyne Industrial", "https://ecodyne.com/")
 Make.ecowater_systems = Make("Ecowater Systems", "https://www.ecowater.com/")
 Make.emerson = Make("Emerson", "https://www.emerson.com/en-us")
 Make.equimeter = Make("Equimeter", "https://sensus.com")
+Make.extech = Make("Extech", "https://extech.com/")
 Make.fabtek_aero = Make("Fabtek Aero", "https://fabtekaero.com/")
 Make.fireye = Make("Fireye", "https://www.fireye.com/")
 Make.franklin_electric = Make("Franklin Electric", "https://franklin-electric.com/")

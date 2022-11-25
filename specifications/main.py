@@ -8,7 +8,10 @@ from specifications.items.flame_scanner import FlameScanner
 from specifications.items.fuel_tank import FuelTank
 from specifications.items.gas_block_valve_body import GasBlockValveBody
 from specifications.items.gas_block_valve_head import GasBlockValveHead
+from specifications.items.high_limit_controller import HighLimitController
 from specifications.items.ignition_transformer import IgnitionTransformer
+from specifications.items.low_oil_limit import LowOilLimit
+from specifications.items.low_water_cutoff import LowWaterCutOff
 from specifications.items.make import Make
 from specifications.items.fuse import Fuse
 from specifications.items.low_gas_pressure_switch import LowGasPressureSwitch
@@ -17,6 +20,7 @@ from specifications.items.low_air_pressure_switch import LowAirPressureSwitch
 
 from specifications.item import Item
 from specifications.html import HTML
+from specifications.items.monometer import Manometer
 from specifications.items.pipe_size import PipeSize
 
 dirname = os.path.dirname(__file__)
@@ -57,6 +61,8 @@ def item_class_calls():
     Make
     PipeSize
 
+    Manometer
+
     Burner
     BurnerController
     ChemicalPump
@@ -66,6 +72,9 @@ def item_class_calls():
     GasBlockValveBody
     GasBlockValveHead
     HighGasPressureSwitch
+    HighLimitController
     IgnitionTransformer
     LowAirPressureSwitch
     LowGasPressureSwitch
+    LowOilLimit
+    LowWaterCutOff

@@ -1,6 +1,8 @@
 from specifications.doc import Doc
 from specifications.enums.fuel import Fuel
+from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -8,20 +10,24 @@ from specifications.support_modules.item_property import item_property
 
 
 class Burner(Item):
+    item_group = ItemGroup.equipment
+
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls)
 
     def __init__(self, make: Make, model: str or None, gas_type: Fuel or None, oil_type: Fuel or None,
-                 manual: str or None, parts_list: str or None, data_sheet: str or None):
+                 manual: str or None, parts_list: str or None, datasheet: str or None):
         super().__init__()
         self.make = make
         self.model = Spec("Model", model)
         self.gas_type = Spec("Gas Type", gas_type)
         self.oil_type = Spec("Oil Type", oil_type)
 
+        if manual or parts_list or datasheet:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.parts_list = Spec("Parts List", Doc(parts_list))
-        self.data_sheet = Spec("Data Sheet", Doc(data_sheet))
+        self.datasheet = Spec("Datasheet", Doc(datasheet))
 
     @item_property
     def make(self):

@@ -1,5 +1,7 @@
 from specifications.doc import Doc
+from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.items.pipe_size import PipeSize
@@ -8,6 +10,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class GasBlockValveBody(Item):
+    item_group = ItemGroup.equipment
+
     v5055a1004 = None
     v5055a1012 = None
     v5055a1020 = None
@@ -25,10 +29,11 @@ class GasBlockValveBody(Item):
         self.make = make
         self.model = Spec("Model", model)
         self.size = size
-        self.max_operating_pressure = Spec("Max Operating Pressure", max_operating_pressure, Unit.pound_per_square_inch)
-        self.max_close_off = Spec("Max Close Off Pressure", max_close_off, Unit.pound_per_square_inch)
+        self.max_operating_pressure = Spec("Max Operating Pressure", max_operating_pressure, Unit.pounds_per_square_inch)
+        self.max_close_off = Spec("Max Close Off Pressure", max_close_off, Unit.pounds_per_square_inch)
 
-        # Docs
+        if manual or installation:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.installation = Spec("Installation", Doc(installation))
 

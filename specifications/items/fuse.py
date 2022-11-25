@@ -1,4 +1,6 @@
 from specifications.doc import Doc
+from specifications.enums.item_group import ItemGroup
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.enums.fuse import FuseClass, FuseSpeed
 from specifications.enums.unit import Unit
@@ -8,6 +10,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class Fuse(Item):
+    item_group = ItemGroup.equipment
+
     atm_r = None
     ktk_r = None
     klk_r = None
@@ -91,9 +95,10 @@ class Fuse(Item):
         self.bussmann_upgrade = bussmann_upgrade
         self.littelfuse_upgrade = littelfuse_upgrade
 
-        # Docs
+        if manual or manual2:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
-        self.manual2 = Spec("Manual2", Doc(manual2))
+        self.manual2 = Spec("Manual", Doc(manual2))
 
     @item_property
     def make(self):

@@ -3,7 +3,7 @@ from specifications.item import Item
 
 
 class Spec:
-    def __init__(self, label: str, value, unit: Unit = None):
+    def __init__(self, label: str or None, value, unit: Unit = None):
         self.label = label
         self.value = value
         self.unit = unit

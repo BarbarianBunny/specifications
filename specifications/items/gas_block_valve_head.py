@@ -1,6 +1,8 @@
 from specifications.doc import Doc
 from specifications.enums.fuel import Fuel
+from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -8,6 +10,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class GasBlockValveHead(Item):
+    item_group = ItemGroup.equipment
+
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls)
 
@@ -26,9 +30,10 @@ class GasBlockValveHead(Item):
         self.amps_opening = Spec("Amps Opening", amps_opening, Unit.amp)
         self.amps_holding = Spec("Amps Holding", amps_holding, Unit.amp)
 
-        # Docs
+        if manual or specifications:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
-        self.specification = Spec("Specifications", Doc(specifications))
+        self.specifications = Spec("Specifications", Doc(specifications))
 
     @item_property
     def make(self):

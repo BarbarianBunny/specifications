@@ -1,8 +1,3 @@
-import re
-
-from specifications.support_modules.convert_case import ConvertCase
-
-
 class Link:
     def __init__(self, url: str):
         self.url = url

@@ -1,7 +1,5 @@
 import re
 
-from specifications.support_modules.convert_case import ConvertCase
-
 
 class Doc:
     def __init__(self, filename: str):

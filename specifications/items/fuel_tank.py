@@ -1,6 +1,8 @@
 from specifications.doc import Doc
+from specifications.enums.item_group import ItemGroup
 from specifications.enums.tank_type import TankType
 from specifications.enums.unit import Unit
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -8,6 +10,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class FuelTank(Item):
+    item_group = ItemGroup.equipment
+
     ul_142_double_wall_300 = None
     ul_142_double_wall_550 = None
     ul_142_double_wall_1100 = None
@@ -26,7 +30,8 @@ class FuelTank(Item):
         self.diameter = Spec("Diameter", diameter, Unit.inch)
         self.weight = Spec("Weight", weight, Unit.pounds)
 
-        # Doc
+        if brochure:
+            self.doc_header = Spec(None, Header("Docs"))
         self.brochure = Spec("Brochure", Doc(brochure))
 
     @item_property

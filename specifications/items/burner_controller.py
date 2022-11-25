@@ -1,5 +1,7 @@
 from specifications.doc import Doc
+from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
+from specifications.header import Header
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -7,6 +9,8 @@ from specifications.support_modules.item_property import item_property
 
 
 class BurnerController(Item):
+    item_group = ItemGroup.equipment
+
     mii_mc120 = None
     r7140l1009 = None
     rm7800g1018 = None
@@ -25,7 +29,8 @@ class BurnerController(Item):
         self.make = make
         self.model = Spec("Model", model)
 
-        # Docs
+        if manual or codes:
+            self.doc_header = Spec(None, Header("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.codes = Spec("Codes", Doc(codes))
 
