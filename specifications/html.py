@@ -13,8 +13,10 @@ from specifications.support_modules.flatten_list import flatten
 class HTML:
 
     @classmethod
-    def a(cls, href, contents: str, class_: str = "link") -> str:
-        return f'<a href="{href}" class="{class_}">{contents}</a>'
+    def a(cls, href, contents: str, class_: str = "link", target: str = None, rel: str = None) -> str:
+        target_text = f' target="{target}"'
+        rel_text = f' rel="{rel}"'
+        return f'<a href="{href}" class="{class_}"{target_text if target else ""}{rel_text if rel else ""}>{contents}</a>'
 
     @classmethod
     def body(cls, contents: str, footer: str = "") -> str:
@@ -239,7 +241,7 @@ class HTML:
             return f"https://github.com/BarbarianBunny/specifications/issues/new?assignee=BarbarianBunny&body={body}&labels={issue.lower()}"
 
         return f'<div class="spacer"></div><footer class="footer">' \
-               f'{cls.info(cls.a(issue_link(Issue.information), "Submit Info"))}' \
-               f'{cls.info(cls.a(issue_link(Issue.correction), "Submit Correction"))}' \
-               f'{cls.info(cls.a(issue_link(Issue.bug), "Bug Report"))}' \
-               f'{cls.info(cls.a(issue_link(Issue.feature), "Feature Request"))}</footer>'
+               f'{cls.info(cls.a(issue_link(Issue.information), "Submit Info", target="_blank", rel="noopener noreferrer"))}' \
+               f'{cls.info(cls.a(issue_link(Issue.correction), "Submit Correction", target="_blank", rel="noopener noreferrer"))}' \
+               f'{cls.info(cls.a(issue_link(Issue.bug), "Bug Report", target="_blank", rel="noopener noreferrer"))}' \
+               f'{cls.info(cls.a(issue_link(Issue.feature), "Feature Request", target="_blank", rel="noopener noreferrer"))}</footer>'
