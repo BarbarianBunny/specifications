@@ -1,7 +1,7 @@
 from specifications.doc import Doc
 from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
-from specifications.header import Header
+from specifications.heading import Heading
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.items.pipe_size import PipeSize
@@ -33,7 +33,7 @@ class GasBlockValveBody(Item):
         self.max_close_off = Spec("Max Close Off Pressure", max_close_off, Unit.pounds_per_square_inch)
 
         if manual or installation:
-            self.doc_header = Spec(None, Header("Docs"))
+            self.doc_header = Spec(None, Heading("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.installation = Spec("Installation", Doc(installation))
 

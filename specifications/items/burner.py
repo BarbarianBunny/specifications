@@ -2,7 +2,7 @@ from specifications.doc import Doc
 from specifications.enums.fuel import Fuel
 from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
-from specifications.header import Header
+from specifications.heading import Heading
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -24,7 +24,7 @@ class Burner(Item):
         self.oil_type = Spec("Oil Type", oil_type)
 
         if manual or parts_list or datasheet:
-            self.doc_header = Spec(None, Header("Docs"))
+            self.doc_header = Spec(None, Heading("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.parts_list = Spec("Parts List", Doc(parts_list))
         self.datasheet = Spec("Datasheet", Doc(datasheet))

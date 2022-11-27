@@ -2,7 +2,7 @@ from specifications.doc import Doc
 from specifications.enums.flame_scanner import SensorType
 from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
-from specifications.header import Header
+from specifications.heading import Heading
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -30,7 +30,7 @@ class FlameScanner(Item):
         self.self_test = Spec("Self Test", self_test)
 
         if manual or catalogue:
-            self.doc_header = Spec(None, Header("Docs"))
+            self.doc_header = Spec(None, Heading("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.catalogue = Spec("Catalogue", Doc(catalogue))
 

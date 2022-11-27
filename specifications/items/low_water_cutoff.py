@@ -1,7 +1,7 @@
 from specifications.doc import Doc
 from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
-from specifications.header import Header
+from specifications.heading import Heading
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -41,7 +41,7 @@ class LowWaterCutOff(Item):
         self.integral_conductance_probe = Spec("Integral Conductance Probe qty", integral_conductance_probe)
 
         if manual or parts_list or catalogue:
-            self.doc_header = Spec(None, Header("Docs"))
+            self.doc_header = Spec(None, Heading("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.parts_list = Spec("Parts List", Doc(parts_list))
         self.catalogue = Spec("Catalogue", Doc(catalogue))

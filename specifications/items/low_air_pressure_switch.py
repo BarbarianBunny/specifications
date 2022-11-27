@@ -1,5 +1,5 @@
 from specifications.enums.item_group import ItemGroup
-from specifications.header import Header
+from specifications.heading import Heading
 from specifications.items.make import Make
 from specifications.enums.pressure_switch import BreaksOn, ResetType
 from specifications.enums.unit import Unit
@@ -46,7 +46,7 @@ class LowAirPressureSwitch(Item):
         self.honeywell_replacement = honeywell_replacement
 
         if manual:
-            self.doc_header = Spec(None, Header("Docs"))
+            self.doc_header = Spec(None, Heading("Docs"))
         self.manual = Spec("Manual", Doc(manual))
 
     @item_property

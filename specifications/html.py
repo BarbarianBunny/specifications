@@ -1,7 +1,9 @@
 from typing import Type
+from urllib.parse import quote
 
 from specifications.doc import Doc
-from specifications.header import Header
+from specifications.enums.issue import Issue
+from specifications.heading import Heading
 from specifications.item import Item
 from specifications.link import Link
 from specifications.spec import Spec
@@ -15,8 +17,8 @@ class HTML:
         return f'<a href="{href}" class="{class_}">{contents}</a>'
 
     @classmethod
-    def body(cls, contents: str) -> str:
-        return f'<body>{contents}</body>'
+    def body(cls, contents: str, footer: str = "") -> str:
+        return f'<body>{contents}{footer}</body>'
 
     @classmethod
     def div(cls, class_: str, contents: str) -> str:
@@ -42,11 +44,15 @@ class HTML:
         return f'<span class="{class_}">{contents}</span>'
 
     @classmethod
+    def info(cls, contents: str):
+        return cls.div("info", contents)
+
+    @classmethod
     def index(cls, depth=0):
         if depth == 0:
-            return cls.div("index", cls.a("index.html", "Specifications"))
+            return cls.info(cls.a("index.html", "Specifications"))
         if depth == 1:
-            return cls.div("index", cls.a("../index.html", "Specifications"))
+            return cls.info(cls.a("../index.html", "Specifications"))
 
     @classmethod
     def class_html(cls, item_class: Type[Item]) -> str:
@@ -54,10 +60,12 @@ class HTML:
             cls.head(item_class.class_title(), 1),
             cls.body("".join([
                 cls.index(1),
-                cls.header(cls.span(item_class.class_title())),
+                cls.heading(cls.span(item_class.class_title())),
                 cls.items(item_class.items),
                 cls.docs(item_class.docs)
-            ])))
+            ]),
+                cls.footer(item_class.class_title())
+            ))
 
     @classmethod
     def class_link(cls, item, depth: int = 0) -> str:
@@ -73,7 +81,7 @@ class HTML:
         if not docs:
             return ""
         docs_list = sorted(docs)
-        return "".join([cls.header(cls.span("Docs")),
+        return "".join([cls.heading(cls.span("Docs")),
                         cls.div("docs", "".join([cls.doc(doc) for doc in docs_list]))])
 
     @classmethod
@@ -87,7 +95,7 @@ class HTML:
             cls.body("".join([
                 cls.index(),
                 cls.index_item_subclasses()
-            ])))
+            ]), cls.footer()))
 
     @classmethod
     def index_item_subclasses(cls) -> str:
@@ -101,7 +109,7 @@ class HTML:
                     subclasses_by_group[subclass.item_group] = [cls.div("item", cls.class_link(subclass, 1))]
 
         for item_group, items in subclasses_by_group.items():
-            subclass_html.append(cls.header(cls.span(item_group)))
+            subclass_html.append(cls.heading(cls.span(item_group)))
             subclass_html.append(cls.div("group", "".join(items)))
 
         return "".join(subclass_html)
@@ -125,11 +133,11 @@ class HTML:
             cls.head(f'{item.item_title()} | {item.class_title()}', 1),
             cls.body("".join([
                 cls.index(1),
-                cls.header(cls.class_link(item)),
-                cls.header(cls.span(item.item_title())),
+                cls.heading(cls.class_link(item)),
+                cls.heading(cls.span(item.item_title())),
                 cls.specs(item.specs(), item),
                 cls.referrers(item)
-            ])))
+            ]), cls.footer(item.class_title(), item.item_title())))
 
     @classmethod
     def item_title(cls, item_title) -> str:
@@ -183,8 +191,8 @@ class HTML:
             if value.url is None:
                 return None
             return cls.a(value.url, value.url)
-        elif isinstance(value, Header):
-            return cls.header(cls.span(value.header))
+        elif isinstance(value, Heading):
+            return cls.heading(cls.span(value.heading))
         else:
             return cls.span(value) + cls.spec_unit(unit)
 
@@ -192,12 +200,12 @@ class HTML:
     def referrers(cls, item):
         if item.referrers:
             # new version use item.referrers dict {"class title": [referrer_item, referrer_item], etc.}
-            referrer_html = [cls.header(cls.span("Referenced in"))]
+            referrer_html = [cls.heading(cls.span("Referenced in"))]
             for class_title, referrers in item.referrers.items():
                 if referrers[0] is not None:
-                    referrer_html.append(cls.header(cls.class_link(referrers[0], 2)))
+                    referrer_html.append(cls.heading(cls.class_link(referrers[0], 2)))
                 else:
-                    referrer_html.append(cls.header(cls.span(class_title)))
+                    referrer_html.append(cls.heading(cls.span(class_title)))
                 referrers_html = []
                 for referrer in sorted(referrers):
                     if referrer is not None:
@@ -210,5 +218,28 @@ class HTML:
         return ""
 
     @classmethod
-    def header(cls, content):
-        return cls.div("header", content)
+    def heading(cls, content):
+        return cls.div("heading", content)
+
+    @classmethod
+    def footer(cls, class_title=None, item_name=None):
+        new_line = "%0A"
+
+        def body_separator(content):
+            return f"{new_line}--- {content} ---{new_line}"
+
+        def issue_link(issue: Issue):
+            if item_name and class_title:
+                body = f"{class_title}{new_line}{item_name}{body_separator(issue)}"
+            elif class_title:
+                body = f"{class_title}{body_separator(issue)}"
+            else:
+                body = body_separator(issue)
+
+            return f"https://github.com/BarbarianBunny/specifications/issues/new?assignee=BarbarianBunny&body={body}&labels={issue.lower()}"
+
+        return f'<div class="spacer"></div><footer class="footer">' \
+               f'{cls.info(cls.a(issue_link(Issue.information), "Submit Info"))}' \
+               f'{cls.info(cls.a(issue_link(Issue.correction), "Submit Correction"))}' \
+               f'{cls.info(cls.a(issue_link(Issue.bug), "Bug Report"))}' \
+               f'{cls.info(cls.a(issue_link(Issue.feature), "Feature Request"))}</footer>'

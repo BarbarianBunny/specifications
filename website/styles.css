@@ -225,6 +225,24 @@ body {
     line-height: 1.5;
 }
 
+/* footer pushed down*/
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.spacer {
+    flex: 1;
+    min-height: 34px;
+}
+
+
+.footer {
+    text-align: right;
+}
+/* end footer pushed down*/
+
 html {
     overflow-x: hidden;
 }
@@ -239,12 +257,13 @@ a {
 
 /* Specifications Classes */
 
-.header {
+.heading {
     padding-top: 11px;
     text-align: center;
 }
 
-.spec, .item {
+
+.spec, .item, .info {
     padding: 8px 11px;
     border-style: solid;
     border-width: 1px;

@@ -1,5 +1,5 @@
 from specifications.doc import Doc
-from specifications.header import Header
+from specifications.heading import Heading
 from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
 from specifications.items.make import Make
@@ -22,7 +22,7 @@ class Blank(Item):
         self.model = Spec("Model", model)
 
         if manual or datasheet or parts_list or catalogue:
-            self.doc_header = Spec(None, Header("Docs"))
+            self.doc_header = Spec(None, Heading("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.datasheet = Spec("Datasheet", Doc(datasheet))
         self.parts_list = Spec("Parts List", Doc(parts_list))

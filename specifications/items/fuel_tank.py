@@ -2,7 +2,7 @@ from specifications.doc import Doc
 from specifications.enums.item_group import ItemGroup
 from specifications.enums.tank_type import TankType
 from specifications.enums.unit import Unit
-from specifications.header import Header
+from specifications.heading import Heading
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -31,7 +31,7 @@ class FuelTank(Item):
         self.weight = Spec("Weight", weight, Unit.pounds)
 
         if brochure:
-            self.doc_header = Spec(None, Header("Docs"))
+            self.doc_header = Spec(None, Heading("Docs"))
         self.brochure = Spec("Brochure", Doc(brochure))
 
     @item_property

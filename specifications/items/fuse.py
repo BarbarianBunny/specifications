@@ -1,6 +1,6 @@
 from specifications.doc import Doc
 from specifications.enums.item_group import ItemGroup
-from specifications.header import Header
+from specifications.heading import Heading
 from specifications.items.make import Make
 from specifications.enums.fuse import FuseClass, FuseSpeed
 from specifications.enums.unit import Unit
@@ -96,7 +96,7 @@ class Fuse(Item):
         self.littelfuse_upgrade = littelfuse_upgrade
 
         if manual or manual2:
-            self.doc_header = Spec(None, Header("Docs"))
+            self.doc_header = Spec(None, Heading("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.manual2 = Spec("Manual", Doc(manual2))
 

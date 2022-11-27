@@ -2,7 +2,7 @@ from specifications.doc import Doc
 from specifications.enums.fuel import Fuel
 from specifications.enums.item_group import ItemGroup
 from specifications.enums.unit import Unit
-from specifications.header import Header
+from specifications.heading import Heading
 from specifications.items.make import Make
 from specifications.item import Item
 from specifications.spec import Spec
@@ -31,7 +31,7 @@ class GasBlockValveHead(Item):
         self.amps_holding = Spec("Amps Holding", amps_holding, Unit.amp)
 
         if manual or specifications:
-            self.doc_header = Spec(None, Header("Docs"))
+            self.doc_header = Spec(None, Heading("Docs"))
         self.manual = Spec("Manual", Doc(manual))
         self.specifications = Spec("Specifications", Doc(specifications))
 
