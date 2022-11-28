@@ -1,3 +1,4 @@
+from specifications.doc import Doc
 from specifications.enums.item_group import ItemGroup
 from specifications.item import Item
 from specifications.link import Link
@@ -90,10 +91,13 @@ class Make(Item):
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls)
 
-    def __init__(self, name: str, website: str = None):
+    def __init__(self, name: str, website: str = None, catalogue: str = None, parts_list: str = None):
         super().__init__()
         self.name = Spec("Name", name)
         self.website = Spec("Website", Link(website))
+        self.catalogue = Spec("Catalogue", Doc(catalogue))
+        self.parts_list = Spec("Parts List", Doc(parts_list))
+        
 
     def __str__(self):
         return f"{self.name}"
@@ -154,7 +158,8 @@ Make.marathon = Make("Marathon", "https://www.regalbeloit.com/brands/Marathon-Mo
 Make.marlo = Make("Marlo", "https://www.marlo-inc.com/")
 Make.master_meter = Make("Master Meter", "https://www.mastermeter.com/")
 Make.maxitrol = Make("Maxitrol", "https://www.maxitrol.com/")
-Make.mcdonnell_miller = Make("McDonnell & Miller", "https://mcdonnellmiller.com/")
+Make.mcdonnell_miller = Make("McDonnell & Miller", "https://mcdonnellmiller.com/", "McDonnell & Miller catalogue.pdf",
+                             "McDonnell & Miller parts list.pdf")
 Make.mercoid = Make("Mercoid", "https://www.dwyer-inst.com/division/mercoid")
 Make.mersen = Make("Mersen", "https://www.mersen.us/")
 Make.neptune = Make("Neptune", "https://www.neptunetg.com")
@@ -173,15 +178,12 @@ Make.tuthill = Make("Tuthill", "https://www.tuthill.com/")
 Make.united_electric_controls = Make("United Electric Controls", "https://www.ueonline.com/")
 Make.us_motors = Make("US Motors", "https://usmotor.com")
 Make.walchem = Make("Walchem", "https://www.walchem.com")
-Make.warrick_controls = Make("Warrick Controls", "https://www.gemssensors.com/product/warrick/conductivity-liquid-level-controls")
+Make.warrick_controls = Make("Warrick Controls",
+                             "https://www.gemssensors.com/product/warrick/conductivity-liquid-level-controls")
 Make.watts = Make("Watts", "https://www.watts.com/")
 Make.webster = Make("Webster", "https://www.webstercombustion.com/")
 Make.weg = Make("WEG", "https://www.weg.net/institutional/US/en/")
 Make.western_water_products = Make("Western Water Products")
-
-
-
-
 
 # for var in vars(Make):
 #     print(var)
