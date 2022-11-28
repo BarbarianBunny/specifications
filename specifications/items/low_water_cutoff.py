@@ -1,5 +1,6 @@
 from specifications.doc import Doc
 from specifications.enums.item_group import ItemGroup
+from specifications.enums.lwco_type import LWCOType
 from specifications.enums.unit import Unit
 from specifications.heading import Heading
 from specifications.items.make import Make
@@ -14,7 +15,8 @@ class LowWaterCutOff(Item):
     def __new__(cls, *args, **kwargs):
         return super().__new__(cls)
 
-    def __init__(self, make: Make, model: str, part_number: str or int, max_allowable_working_pressure, mawp_unit: Unit,
+    def __init__(self, make: Make, model: str, lwco_type: LWCOType or None, max_allowable_working_pressure: int or None,
+                 mawp_unit: Unit or None,
                  bolts: int or None,
                  mercury_switches: bool or None = None,
                  single_pole_single_throw_switch: int or None = None,
@@ -24,20 +26,33 @@ class LowWaterCutOff(Item):
                  pump_controller: bool = None,
                  dual_pump_control: bool = None,
                  mcdonnell_miller_upgrade: Item = None,
-                 b: str or None = None,
-                 a: str or None = None,
-                 a_b: str or None = None,
-                 a_b_d_g: str or None = None,
-                 a_r_rl: str or None = None,
-                 _7b: str or None = None,
-                 m: str or None = None,
-                 bp: str or None = None,
-                 md: str or None = None,
-                 manual: str or None = None, parts_list: str or None = None, catalogue: str or None = None):
+                 sensor_probe: Item = None,
+                 cb: str = None,
+                 a: str = None,
+                 a_b: str = None,
+                 a_b_d_g: str = None,
+                 a_r_rl: str = None,
+                 b: str = None,
+                 lqhu: str = None,
+                 g: str = None,
+                 _7b: str = None,
+                 m: str = None,
+                 bp: str = None,
+                 md: str = None,
+                 hw: str = None,
+                 t: str = None,
+                 mt: str = None,
+                 _24_120: str = None,
+                 number_suffix: str = None,
+                 br_1: str = None,
+                 lp: str = None,
+                 hp: str = None,
+                 s: str = None,
+                 manual: str = None, parts_list: str = None, catalogue: str = None):
         super().__init__()
         self.make = make
         self.model = Spec("Model", model)
-        self.part_number = Spec("Part Number", part_number)
+        self.lwco_type = Spec("Type", lwco_type)
         self.max_allowable_working_pressure = Spec("MAWP", max_allowable_working_pressure, mawp_unit)
         self.bolts = Spec("Bolts", bolts)
         # switches
@@ -50,21 +65,39 @@ class LowWaterCutOff(Item):
         self.water_column = Spec("Water Column", water_column)
         self.pump_controller = Spec("Pump Controller", pump_controller)
         self.dual_pump_control = Spec("Dual Pump Control", dual_pump_control)
-        # Replacement/upgrade
+        # Items
         self.mcdonnell_miller_upgrade = mcdonnell_miller_upgrade
+        self.sensor_probe = sensor_probe
+
+        # Prefix
+        if cb:
+            self.prefix_header = Spec(None, Heading("Model Prefixes"))
+        self.cb = Spec("CB", cb)
 
         # Suffix
-        if m or b or md or a_r_rl or bp:
+        if a or a_b or a_b_d_g or a_r_rl or b or lqhu or g or _7b or m or bp or md or hw or t or mt or _24_120 or \
+                number_suffix or br_1 or lp or hp or s:
             self.suffix_header = Spec(None, Heading("Model Suffixes"))
-        self.b = Spec("B", b)
         self.a = Spec("A", a)
         self.a_b = Spec("A or B", a_b)
         self.a_b_d_g = Spec("A, B, D, or G", a_b_d_g)
         self.a_r_rl = Spec("A, R, or RL", a_r_rl)
+        self.b = Spec("B", b)
+        self.lqhu = Spec("LQHU", lqhu)
+        self.g = Spec("G", g)
         self._7b = Spec("7B", _7b)
         self.m = Spec("M", m)
         self.bp = Spec("BP", bp)
         self.md = Spec("MD", md)
+        self.hw = Spec("HW", hw)
+        self.t = Spec("T", t)
+        self.mt = Spec("MT", mt)
+        self._24_120 = Spec("24 or 120", _24_120)
+        self.number_suffix = Spec("1, 2, 3, 4, or 5", number_suffix)
+        self.br_1 = Spec("BR-1", br_1)
+        self.lp = Spec("LP", lp)
+        self.hp = Spec("HP", hp)
+        self.s = Spec("S", s)
 
         # Docs
         if manual or parts_list or catalogue:
@@ -89,21 +122,30 @@ class LowWaterCutOff(Item):
     def mcdonnell_miller_upgrade(self, item):
         self._mcdonnell_miller_upgrade = Spec("McDonnell & Miller Upgrade", item)
 
+    @item_property
+    def sensor_probe(self):
+        return self._sensor_probe
+
+    @sensor_probe.setter
+    def sensor_probe(self, item):
+        self._sensor_probe = Spec("Sensor/Probe", item)
+
     def __str__(self):
         return f"{self.model}"
 
 
 # Cleaver Brooks
-LowWaterCutOff.level_master_750_193 = LowWaterCutOff(Make.cleaver_brooks, "750-193 Level Master", None, 250,
+LowWaterCutOff.level_master_750_193 = LowWaterCutOff(Make.cleaver_brooks, "750-193 Level Master", LWCOType.float, 250,
                                                      Unit.pounds_per_square_inch, None,
                                                      manual="Cleaver Brooks 750-193 Level Master manual.pdf")
-LowWaterCutOff.level_master_750_281 = LowWaterCutOff(Make.cleaver_brooks, "750-281 Level Master", None, 250,
+LowWaterCutOff.level_master_750_281 = LowWaterCutOff(Make.cleaver_brooks, "750-281 Level Master", LWCOType.float, 250,
                                                      Unit.pounds_per_square_inch, None,
                                                      manual="Cleaver Brooks 750-281 Level Master manual.pdf")
 
 # McDonnell & Miller
 # 150S
-LowWaterCutOff._150s = LowWaterCutOff(Make.mcdonnell_miller, "150S", None, 150, Unit.pounds_per_square_inch, 8,
+LowWaterCutOff._150s = LowWaterCutOff(Make.mcdonnell_miller, "150S", LWCOType.float, 150, Unit.pounds_per_square_inch,
+                                      8,
                                       pump_controller=True,
                                       single_pole_single_throw_switch=1,
                                       single_pole_double_throw_switch=1,
@@ -114,7 +156,7 @@ LowWaterCutOff._150s = LowWaterCutOff(Make.mcdonnell_miller, "150S", None, 150, 
                                       parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                       catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
 # 150
-LowWaterCutOff._150 = LowWaterCutOff(Make.mcdonnell_miller, "150", None, 150, Unit.pounds_per_square_inch, 8,
+LowWaterCutOff._150 = LowWaterCutOff(Make.mcdonnell_miller, "150", LWCOType.float, 150, Unit.pounds_per_square_inch, 8,
                                      mercury_switches=True,
                                      pump_controller=True,
                                      single_pole_single_throw_switch=1,
@@ -127,7 +169,8 @@ LowWaterCutOff._150 = LowWaterCutOff(Make.mcdonnell_miller, "150", None, 150, Un
                                      parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                      catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
 # 158S
-LowWaterCutOff._158s = LowWaterCutOff(Make.mcdonnell_miller, "158S", None, 150, Unit.pounds_per_square_inch, 8,
+LowWaterCutOff._158s = LowWaterCutOff(Make.mcdonnell_miller, "158S", LWCOType.float, 150, Unit.pounds_per_square_inch,
+                                      8,
                                       pump_controller=True,
                                       single_pole_double_throw_switch=2,
                                       m="Manual Reset",
@@ -135,14 +178,16 @@ LowWaterCutOff._158s = LowWaterCutOff(Make.mcdonnell_miller, "158S", None, 150, 
                                       parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                       catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
 # 159S
-LowWaterCutOff._159s = LowWaterCutOff(Make.mcdonnell_miller, "159S", None, 150, Unit.pounds_per_square_inch, 8,
+LowWaterCutOff._159s = LowWaterCutOff(Make.mcdonnell_miller, "159S", LWCOType.float, 150, Unit.pounds_per_square_inch,
+                                      8,
                                       pump_controller=True,
                                       single_pole_single_throw_switch=2,
                                       manual="McDonnell & Miller 150S 157S manual.pdf",
                                       parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                       catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
 # 157S
-LowWaterCutOff._157s = LowWaterCutOff(Make.mcdonnell_miller, "157S", None, 150, Unit.pounds_per_square_inch, 8,
+LowWaterCutOff._157s = LowWaterCutOff(Make.mcdonnell_miller, "157S", LWCOType.float, 150, Unit.pounds_per_square_inch,
+                                      8,
                                       water_column=True,
                                       pump_controller=True,
                                       single_pole_single_throw_switch=1,
@@ -155,7 +200,7 @@ LowWaterCutOff._157s = LowWaterCutOff(Make.mcdonnell_miller, "157S", None, 150, 
                                       parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                       catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
 # 157
-LowWaterCutOff._157 = LowWaterCutOff(Make.mcdonnell_miller, "157", None, 150, Unit.pounds_per_square_inch, 8,
+LowWaterCutOff._157 = LowWaterCutOff(Make.mcdonnell_miller, "157", LWCOType.float, 150, Unit.pounds_per_square_inch, 8,
                                      mercury_switches=True,
                                      water_column=True,
                                      pump_controller=True,
@@ -170,7 +215,8 @@ LowWaterCutOff._157 = LowWaterCutOff(Make.mcdonnell_miller, "157", None, 150, Un
                                      parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                      catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
 # 150E
-LowWaterCutOff._150e = LowWaterCutOff(Make.mcdonnell_miller, "150E", None, 150, Unit.pounds_per_square_inch, 8,
+LowWaterCutOff._150e = LowWaterCutOff(Make.mcdonnell_miller, "150E", LWCOType.float, 150, Unit.pounds_per_square_inch,
+                                      8,
                                       pump_controller=True,
                                       dual_pump_control=True,
                                       m="Manual Reset",
@@ -178,7 +224,8 @@ LowWaterCutOff._150e = LowWaterCutOff(Make.mcdonnell_miller, "150E", None, 150, 
                                       parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                       catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
 # 157E
-LowWaterCutOff._157e = LowWaterCutOff(Make.mcdonnell_miller, "157E", None, 150, Unit.pounds_per_square_inch, 8,
+LowWaterCutOff._157e = LowWaterCutOff(Make.mcdonnell_miller, "157E", LWCOType.float, 150, Unit.pounds_per_square_inch,
+                                      8,
                                       water_column=True,
                                       pump_controller=True,
                                       dual_pump_control=True,
@@ -188,14 +235,59 @@ LowWaterCutOff._157e = LowWaterCutOff(Make.mcdonnell_miller, "157E", None, 150, 
                                       catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
 
 # 61
-LowWaterCutOff._61 = LowWaterCutOff(Make.mcdonnell_miller, "61", None, 20, Unit.pounds_per_square_inch, 4,
+LowWaterCutOff._61 = LowWaterCutOff(Make.mcdonnell_miller, "61", LWCOType.float, 20, Unit.pounds_per_square_inch, 4,
                                     single_pole_single_throw_switch=2,
                                     manual="McDonnell & Miller 61 manual.pdf",
                                     parts_list="McDonnell & Miller 61 parts list.pdf",
                                     catalogue="McDonnell & Miller 61 catalogue.pdf")
 
 # 63
+LowWaterCutOff._63 = LowWaterCutOff(Make.mcdonnell_miller, "63", LWCOType.float, 50, Unit.pounds_per_square_inch, 4,
+                                    single_pole_double_throw_switch=1,
+                                    b="Float Block",
+                                    m="Manual Reset",
+                                    manual="McDonnell & Miller 63 manual.pdf",
+                                    parts_list="McDonnell & Miller 63 parts list.pdf",
+                                    catalogue="McDonnell & Miller 63 catalogue.pdf")
 
+# 64
+LowWaterCutOff._64 = LowWaterCutOff(Make.mcdonnell_miller, "64", LWCOType.float, 50, Unit.pounds_per_square_inch, 4,
+                                    single_pole_single_throw_switch=2,
+                                    a="Quick Hook-up Fittings",
+                                    b="Float Block",
+                                    manual="McDonnell & Miller 64 manual.pdf",
+                                    parts_list="McDonnell & Miller 64 parts list.pdf",
+                                    catalogue="McDonnell & Miller 64 catalogue.pdf")
+
+# 67
+LowWaterCutOff._67 = LowWaterCutOff(Make.mcdonnell_miller, "67", LWCOType.float, 20, Unit.pounds_per_square_inch, None,
+                                    single_pole_single_throw_switch=2,
+                                    g="For Millivolt Service",
+                                    lqhu="Without Quick Hook-up Fittings",
+                                    manual="McDonnell & Miller 67 767 manual.pdf",
+                                    parts_list="McDonnell & Miller 67 parts list.pdf",
+                                    catalogue="McDonnell & Miller 67 catalogue.pdf")
+
+# RS
+LowWaterCutOff.rs = LowWaterCutOff(Make.mcdonnell_miller, "RS", LWCOType.sensor, None, Unit.pounds_per_square_inch,
+                                   None,
+                                   number_suffix="Number of Probes",
+                                   br_1="250 psi (Probes Ordered Separately)",
+                                   lp="15 psi Steam, 160 psi Hot Water",
+                                   hp="250 psi",
+                                   s="Short Probe",
+                                   manual="McDonnell & Miller 750 manual.pdf",
+                                   parts_list="McDonnell & Miller RS parts list.pdf",
+                                   catalogue="McDonnell & Miller RS catalogue.pdf")
+# 750
+LowWaterCutOff._750 = LowWaterCutOff(Make.mcdonnell_miller, "750", LWCOType.controller, None, None, None,
+                                     sensor_probe=LowWaterCutOff.rs,
+                                     hw="High Water Cutoff Only",
+                                     t="Auto Reset",
+                                     mt="Manual Reset",
+                                     _24_120="Voltage",
+                                     manual="McDonnell & Miller 750 manual.pdf",
+                                     catalogue="McDonnell & Miller 750 catalogue.pdf")
 
 # 93
 LowWaterCutOff._93 = LowWaterCutOff(Make.mcdonnell_miller, "93", None, 150, Unit.pounds_per_square_inch, 8,

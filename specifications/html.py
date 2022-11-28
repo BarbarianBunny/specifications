@@ -119,10 +119,10 @@ class HTML:
     @classmethod
     def item(cls, item: Item, depth: int = 0):
         if depth == 0:
-            return cls.div("item", cls.a(f'{item.item_kebab()}.html', item.item_title()))
+            return cls.div("item", cls.a(f'{item.safe_item_kebab()}.html', item.item_title()))
         elif depth == 1:
             return cls.div("item",
-                           cls.a(f'{item.class_kebab()}/{item.item_kebab()}.html', item.item_title()))
+                           cls.a(f'{item.class_kebab()}/{item.safe_item_kebab()}.html', item.item_title()))
 
     @classmethod
     def items(cls, items, depth: int = 0):
@@ -182,7 +182,7 @@ class HTML:
                 values.append(cls.spec_value(item, thing, unit))
             return ", ".join(values)
         elif isinstance(value, Item):
-            return cls.a(f'../{value.class_kebab()}/{value.item_kebab()}.html', value.item_title()) + cls.spec_unit(
+            return cls.a(f'../{value.class_kebab()}/{value.safe_item_kebab()}.html', value.item_title()) + cls.spec_unit(
                 unit)
         elif isinstance(value, Doc):
             if value.filename is None:
@@ -213,7 +213,7 @@ class HTML:
                     if referrer is not None:
                         referrers_html.append(
                             cls.div("item",
-                                    cls.a(f"../{referrer.class_kebab()}/{referrer.item_kebab()}.html",
+                                    cls.a(f"../{referrer.class_kebab()}/{referrer.safe_item_kebab()}.html",
                                           referrer.item_title())))
                 referrer_html.append(cls.div("referrers", "".join(referrers_html)))
             return "".join(referrer_html)

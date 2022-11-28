@@ -1,3 +1,4 @@
+from urllib.parse import quote
 from weakref import WeakSet
 
 from specifications.enums.item_group import ItemGroup
@@ -43,6 +44,9 @@ class Item:
 
     def item_kebab(self):
         return ConvertCase.kebab_case(self.__str__())
+
+    def safe_item_kebab(self):
+        return quote(self.item_kebab(), safe="%")
 
     def specs(self):
         return vars(self).values()
