@@ -1,5 +1,4 @@
 from typing import Type
-from urllib.parse import quote
 
 from specifications.doc import Doc
 from specifications.enums.issue import Issue
@@ -7,7 +6,6 @@ from specifications.heading import Heading
 from specifications.item import Item
 from specifications.link import Link
 from specifications.spec import Spec
-from specifications.support_modules.flatten_list import flatten
 
 
 class HTML:

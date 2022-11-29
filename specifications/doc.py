@@ -20,6 +20,7 @@ class Doc:
     def href(self):
         filename = re.sub(r",", "%2C", self.filename)
         filename = re.sub(r" ", "%20", filename)
+        filename = re.sub(r"#", "%23", filename)
         return filename
 
     def title(self):

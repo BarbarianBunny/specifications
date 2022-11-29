@@ -28,6 +28,7 @@ class LowWaterCutOff(Item):
                  mcdonnell_miller_upgrade: Item = None,
                  sensor_probe: Item = None,
                  cb: str = None,
+                 swa: str = None,
                  a: str = None,
                  a_b: str = None,
                  a_b_d_g: str = None,
@@ -48,6 +49,7 @@ class LowWaterCutOff(Item):
                  lp: str = None,
                  hp: str = None,
                  s: str = None,
+                 hd: str = None,
                  manual: str = None, parts_list: str = None, catalogue: str = None):
         super().__init__()
         self.make = make
@@ -70,13 +72,14 @@ class LowWaterCutOff(Item):
         self.sensor_probe = sensor_probe
 
         # Prefix
-        if cb:
+        if cb or swa:
             self.prefix_header = Spec(None, Heading("Model Prefixes"))
         self.cb = Spec("CB", cb)
+        self.swa = Spec("SWA", swa)
 
         # Suffix
         if a or a_b or a_b_d_g or a_r_rl or b or lqhu or g or _7b or m or bp or md or hw or t or mt or _24_120 or \
-                number_suffix or br_1 or lp or hp or s:
+                number_suffix or br_1 or lp or hp or s or hd:
             self.suffix_header = Spec(None, Heading("Model Suffixes"))
         self.a = Spec("A", a)
         self.a_b = Spec("A or B", a_b)
@@ -98,6 +101,7 @@ class LowWaterCutOff(Item):
         self.lp = Spec("LP", lp)
         self.hp = Spec("HP", hp)
         self.s = Spec("S", s)
+        self.hd = Spec("HD", hd)
 
         # Docs
         if manual or parts_list or catalogue:
@@ -149,9 +153,11 @@ LowWaterCutOff._150s = LowWaterCutOff(Make.mcdonnell_miller, "150S", LWCOType.fl
                                       pump_controller=True,
                                       single_pole_single_throw_switch=1,
                                       single_pole_double_throw_switch=1,
+                                      swa="Replacement Switch Assembly only",
                                       b="Float Block",
                                       m="Manual Reset",
                                       md="Max Differential",
+                                      hd="Replacement Head only",
                                       manual="McDonnell & Miller 150S 157S manual.pdf",
                                       parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                       catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
@@ -173,7 +179,9 @@ LowWaterCutOff._158s = LowWaterCutOff(Make.mcdonnell_miller, "158S", LWCOType.fl
                                       8,
                                       pump_controller=True,
                                       single_pole_double_throw_switch=2,
+                                      swa="Replacement Switch Assembly only",
                                       m="Manual Reset",
+                                      hd="Replacement Head only",
                                       manual="McDonnell & Miller 150S 157S manual.pdf",
                                       parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                       catalogue="McDonnell & Miller 150S 157S catalogue.pdf")
@@ -182,6 +190,8 @@ LowWaterCutOff._159s = LowWaterCutOff(Make.mcdonnell_miller, "159S", LWCOType.fl
                                       8,
                                       pump_controller=True,
                                       single_pole_single_throw_switch=2,
+                                      swa="Replacement Switch Assembly only",
+                                      hd="Replacement Head only",
                                       manual="McDonnell & Miller 150S 157S manual.pdf",
                                       parts_list="McDonnell & Miller 150 150S 157 157S parts list.pdf",
                                       catalogue="McDonnell & Miller 150S 157S catalogue.pdf")

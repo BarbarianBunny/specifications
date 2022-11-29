@@ -1,5 +1,4 @@
 from specifications.enums.unit import Unit
-from specifications.item import Item
 
 
 class Spec:
